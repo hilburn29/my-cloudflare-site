@@ -1,49 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Site</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background: #f5f5f5;
-        }
-        h1 {
-            color: #333;
-        }
-        a {
-            color: #f48120;
-        }
-        video {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px 0;
-        }
-
-        /* 🆕 PLACE YOUR NEW CSS STYLES RIGHT HERE! */
-        p {
-            line-height: 1.6;
-            font-size: 18px;
-            color: #444;
-        }
-        
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenneth and Lori - 45th Anniversary Celebration</title>
+  <style>
+    body {
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .tribute-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #ffffff;
+      border: 3px solid #d4af37; /* Golden Anniversary Theme Border */
+      border-radius: 15px;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+    }
+    .tribute-title {
+      color: #1a1a1a;
+      font-size: 2.2rem;
+      margin-bottom: 5px;
+    }
+    .tribute-subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+    }
+    .audio-box {
+      background: #fdfbf7;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 25px auto;
+      max-width: 500px;
+      border: 1px dashed #d4af37;
+    }
+    .audio-box h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    audio {
+      width: 100%;
+    }
+    .tribute-message {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #333;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 5px solid #d4af37;
+      text-align: left;
+    }
+    .sparkle-icons {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <img src="Images/Bee-Image.jpg" alt="Bee" style="width: 100px; height: auto;">
+<div class="tribute-container">
+  <!-- Main Anniversary Header -->
+  <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
+  <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
 
-    <video controls>
-        <source src="Images/FedUp.MP4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+  <!-- Interactive Custom Music Player -->
+  <div class="audio-box">
+    <h3>🎵 Listen to Their Custom 45th Anniversary Song:</h3>
+    <!-- Connects directly to the file path uploaded into your main repository -->
+    <audio controls>
+      <source src="Screen Recording 2026-07-11 044939.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
-    <p>😂 Sounds more like FedUp than FedEx as the delivery driver passed by my house yesterday.
-          What's the chance it's going to be Mo (0:10) expensive than he originally thought?</p>
+  <!-- Special Celebration Paragraph -->
+  <div class="tribute-message">
+    <p>Forty-five years together is a true spark! Turn up your volume to listen to their custom AI anniversary tribute song, look back on their wonderful memories, and join us in celebrating this magnificent milestone for Kenneth and Lori Fields. Here’s to many more years of building a beautiful life together!</p>
+    <div class="sparkle-icons">✨ 🎆 ✨</div>
+  </div>
+</div>
+
 </body>
 </html>
