@@ -46,20 +46,18 @@
       margin: 0 0 12px 0;
     }
 
-    /* 3. Circular Photo Display Elements - Fixed Centering & Paths */
+    /* 3. Circular Photo Display Element - Single Centered Image Configuration */
     .photo-display {
       display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
+      justify-content: center; /* Centers the single image perfectly inside the card */
       margin-bottom: 12px;
     }
     .photo-display img {
-      width: 110px; /* Sized perfectly to balance side-by-side inside the card */
-      height: 110px;
+      width: 140px; /* Made the single centered image slightly larger for better balance */
+      height: 140px;
       object-fit: cover;
-      object-position: center 20%; /* Forces the framing upward to center their faces */
-      border-radius: 50%; /* Elegantly masks your screenshots into circular portraits */
+      object-position: center 20%; /* Forces the framing upward to center their faces perfectly */
+      border-radius: 50%; /* Elegantly masks your screenshot into a circular portrait */
       border: 2px solid #d4af37;
       box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     }
@@ -168,10 +166,9 @@
   <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
   <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
 
-  <!-- Circular Photo Display Layer (Lowercase 'images' path corrected) -->
+  <!-- Circular Photo Display Layer (Updated with Capital I in Images) -->
   <div class="photo-display">
-    <img src="images/Screenshot%202026-07-11%20042511.png" alt="Kenneth and Lori Portrait 1">
-    <img src="images/Screenshot%202026-07-11%20042608.png" alt="Kenneth and Lori Portrait 2">
+    <img src="Images/Screenshot%202026-07-11%20042608.png" alt="Kenneth and Lori Anniversary Portrait">
   </div>
 
   <!-- Audio Player Block -->
