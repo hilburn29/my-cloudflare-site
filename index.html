@@ -5,28 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kenneth and Lori - 45th Anniversary Celebration</title>
   <style>
-    /* Animated Dark Sky Background */
+    /* 1. Animated Dark Sky & Responsive Mobile Setup */
     body {
       background-color: #0c1020;
       margin: 0;
-      padding: 0;
+      padding: 15px; /* Spacing for smaller phone screens */
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
     }
 
-    /* Main Anniversary Card - Made 1/4 the original size and ultra-compact */
+    /* 2. Compact 1/4 Size Anniversary Card Layout */
     .tribute-container {
       position: relative;
-      z-index: 10; /* Keeps card above the fireworks */
+      z-index: 10; /* Keeps card above background fireworks */
       width: 100%;
-      max-width: 320px; /* Cut dramatically to 1/4 original structural feel */
-      padding: 15px; 
+      max-width: 320px; /* Slim size prioritizing background fireworks views */
+      padding: 18px; 
       background: rgba(255, 255, 255, 0.96); 
-      border: 3px solid #d4af37; /* Golden Anniversary Border */
+      border: 3px solid #d4af37; /* Golden Anniversary Theme Border */
       border-radius: 12px;
       box-shadow: 0px 15px 35px rgba(0,0,0,0.6);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -35,7 +36,7 @@
     }
     .tribute-title {
       color: #1a1a1a;
-      font-size: 1.3rem; /* Small, punchy title */
+      font-size: 1.3rem;
       margin: 0 0 4px 0;
       font-weight: bold;
     }
@@ -44,8 +45,25 @@
       font-size: 0.85rem;
       margin: 0 0 12px 0;
     }
+
+    /* 3. Circular Photo Display Elements */
+    .photo-display {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .photo-display img {
+      width: 110px; /* Placed perfectly to sit side-by-side */
+      height: 110px;
+      object-fit: cover;
+      border-radius: 50%; /* Cuts still images into elegant portrait circles */
+      border: 2px solid #d4af37;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    }
     
-    /* Music Box Container - Hugs the audio player tightly */
+    /* 4. Sleek Customized Music Box */
     .audio-box {
       background: #fdfbf7;
       padding: 8px; 
@@ -61,7 +79,12 @@
     audio {
       width: 100%;
       height: 32px; 
+      border-radius: 20px;
+      background: #1a1a1a; /* Dark sleek finish */
+      filter: sepia(20%) saturate(150%) hue-rotate(10deg); /* Golden hue tint override */
     }
+
+    /* 5. Message Box */
     .tribute-message {
       font-size: 0.85rem; 
       line-height: 1.4;
@@ -79,7 +102,7 @@
       margin-top: 6px;
     }
 
-    /* --- EXPANDED FIREWORKS DISPLAY --- */
+    /* 6. Glowing Fireworks Display System */
     .firework-display {
       position: absolute;
       top: 0;
@@ -89,38 +112,32 @@
       pointer-events: none;
       z-index: 1;
     }
-
     .firework {
       position: absolute;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      box-shadow: 
-        0 0 #ff3366, 0 0 #ff3366, 0 0 #ff3366, 0 0 #ff3366,
-        0 0 #ffcc00, 0 0 #ffcc00, 0 0 #ffcc00, 0 0 #ffcc00,
-        0 0 #33ccff, 0 0 #33ccff, 0 0 #33ccff, 0 0 #33ccff;
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); /* Neon glow effect filter */
       animation: explode 3s infinite ease-out;
     }
 
-    /* Positioned entirely surrounding the tiny card */
+    /* Spatial positioning framing the 1/4 size card block */
     .f1 { top: 15%; left: 15%; animation-delay: 0s; scale: 1.2; }
     .f2 { top: 20%; left: 75%; animation-delay: 0.7s; scale: 1.5; }
     .f3 { top: 70%; left: 12%; animation-delay: 1.4s; scale: 1.1; }
     .f4 { top: 65%; left: 80%; animation-delay: 2.1s; scale: 1.3; }
-    .f5 { top: 45%; left: 20%; animation-delay: 0.4s; scale: 0.9; }
-    .f6 { top: 40%; left: 78%; animation-delay: 1.8s; scale: 1.1; }
+    .f5 { top: 45%; left: 18%; animation-delay: 0.4s; scale: 0.9; }
+    .f6 { top: 40%; left: 82%; animation-delay: 1.8s; scale: 1.1; }
 
     @keyframes explode {
       0% {
         transform: translate(0, 80px);
-        box-shadow: 
-          0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
+        box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
         opacity: 1;
       }
       25% {
         transform: translate(0, 0);
-        box-shadow: 
-          0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
+        box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
         opacity: 1;
       }
       100% {
@@ -135,7 +152,7 @@
 </head>
 <body>
 
-<!-- Six active firework channels enveloping the site background -->
+<!-- Six background glow firework loops -->
 <div class="firework-display">
   <div class="firework f1"></div>
   <div class="firework f2"></div>
@@ -146,11 +163,17 @@
 </div>
 
 <div class="tribute-container">
-  <!-- Main Anniversary Header -->
+  <!-- Main Headers -->
   <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
   <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
 
-  <!-- Compact Custom Music Player Box -->
+  <!-- Circular Photo Display Layer -->
+  <div class="photo-display">
+    <img src="screenshot1.jpg" alt="Kenneth and Lori Portrait 1">
+    <img src="screenshot2.jpg" alt="Kenneth and Lori Portrait 2">
+  </div>
+
+  <!-- Audio Player Block -->
   <div class="audio-box">
     <h3>🎵 Listen to Their Anniversary Song:</h3>
     <audio controls>
@@ -159,9 +182,9 @@
     </audio>
   </div>
 
-  <!-- Special Celebration Paragraph -->
+  <!-- Message Paragraph -->
   <div class="tribute-message">
-    <p>Forty-five years together is a true spark! Turn up your volume to listen to their tribute song and join us in celebrating Kenneth and Lori Fields! ✨ 🎆 ✨</p>
+    <p>Forty-five years together is a true spark! Turn up your volume to listen to their custom AI tribute song and join us in celebrating Kenneth and Lori Fields! ✨ 🎆 ✨</p>
   </div>
 </div>
 
