@@ -14,13 +14,13 @@
       position: relative;
     }
 
-    /* Main Anniversary Card */
+    /* Main Anniversary Card - Shrunk down to leave more empty space around it */
     .tribute-container {
       position: relative;
       z-index: 10; /* Keeps card above the fireworks */
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
+      max-width: 520px; /* Reduced from 800px to make the card much more compact */
+      margin: 50px auto;
+      padding: 20px; /* Reduced from 30px to save space */
       background: rgba(255, 255, 255, 0.95); /* Slight transparency */
       border: 3px solid #d4af37; /* Golden Anniversary Border */
       border-radius: 15px;
@@ -30,44 +30,48 @@
     }
     .tribute-title {
       color: #1a1a1a;
-      font-size: 2.2rem;
+      font-size: 1.8rem; /* Made text a bit smaller to fit smaller card */
       margin-bottom: 5px;
     }
     .tribute-subtitle {
       color: #555;
-      font-size: 1.1rem;
-      margin-bottom: 25px;
+      font-size: 1rem;
+      margin-bottom: 15px;
     }
+    
+    /* Music Box Container - Made ultra-compact */
     .audio-box {
       background: #fdfbf7;
-      padding: 20px;
+      padding: 10px 15px; /* Shrunk padding to make the box significantly shorter */
       border-radius: 8px;
-      margin: 25px auto;
-      max-width: 500px;
+      margin: 15px auto;
+      max-width: 420px; /* Shrunk width */
       border: 1px dashed #d4af37;
     }
     .audio-box h3 {
       margin-top: 0;
-      font-size: 1.1rem;
+      margin-bottom: 8px;
+      font-size: 0.95rem; /* Smaller font size */
       color: #333;
     }
     audio {
       width: 100%;
+      height: 36px; /* Explicit compact height for the audio bar */
     }
     .tribute-message {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 0.95rem; /* Slightly smaller text */
+      line-height: 1.5;
       color: #333;
       background: #f9f9f9;
-      padding: 20px;
+      padding: 15px;
       border-radius: 8px;
       border-left: 5px solid #d4af37;
       text-align: left;
     }
     .sparkle-icons {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     /* --- FIREWORKS CODE --- */
@@ -93,11 +97,11 @@
       animation: explode 2.5s infinite ease-out;
     }
 
-    /* Different placements and delays to make it look realistic */
-    .f1 { top: 15%; left: 15%; animation-delay: 0s; }
-    .f2 { top: 30%; left: 80%; animation-delay: 0.6s; scale: 1.3; }
-    .f3 { top: 65%; left: 10%; animation-delay: 1.2s; scale: 0.8; }
-    .f4 { top: 75%; left: 85%; animation-delay: 1.8s; scale: 1.1; }
+    /* Placements shifted outward to burst beautifully in the wide margins */
+    .f1 { top: 12%; left: 8%; animation-delay: 0s; scale: 1.1; }
+    .f2 { top: 25%; left: 88%; animation-delay: 0.6s; scale: 1.4; }
+    .f3 { top: 55%; left: 5%; animation-delay: 1.2s; scale: 0.9; }
+    .f4 { top: 70%; left: 89%; animation-delay: 1.8s; scale: 1.2; }
 
     @keyframes explode {
       0% {
@@ -114,9 +118,9 @@
       }
       100% {
         box-shadow: 
-          -120px -120px #ff3366, 120px -120px #ffcc00, -120px 120px #33ccff, 120px 120px #ff3366,
-          -180px 0px #ffcc00, 180px 0px #33ccff, 0px -180px #ff3366, 0px 180px #ffcc00,
-          -80px -40px #33ccff, 80px 40px #ff3366, -40px 80px #ffcc00, 40px -80px #33ccff;
+          -140px -140px #ff3366, 140px -140px #ffcc00, -140px 140px #33ccff, 140px 140px #ff3366,
+          -200px 0px #ffcc00, 200px 0px #33ccff, 0px -200px #ff3366, 0px 200px #ffcc00,
+          -90px -50px #33ccff, 90px 50px #ff3366, -50px 90px #ffcc00, 40px -90px #33ccff;
         opacity: 0;
       }
     }
@@ -137,7 +141,7 @@
   <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
   <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
 
-  <!-- Interactive Custom Music Player -->
+  <!-- Compact Custom Music Player Box -->
   <div class="audio-box">
     <h3>🎵 Listen to Their Custom 45th Anniversary Song:</h3>
     <audio controls>
