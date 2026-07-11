@@ -9,7 +9,7 @@
     body {
       background-color: #0c1020;
       margin: 0;
-      padding: 15px; /* Spacing for smaller phone screens */
+      padding: 15px; /* Adds safe spacing on phone screens */
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
@@ -22,9 +22,9 @@
     /* 2. Compact 1/4 Size Anniversary Card Layout */
     .tribute-container {
       position: relative;
-      z-index: 10; /* Keeps card above background fireworks */
+      z-index: 10; /* Keeps the card visible above background fireworks */
       width: 100%;
-      max-width: 320px; /* Slim size prioritizing background fireworks views */
+      max-width: 320px; /* Slim size maximizing background firework views */
       padding: 18px; 
       background: rgba(255, 255, 255, 0.96); 
       border: 3px solid #d4af37; /* Golden Anniversary Theme Border */
@@ -46,7 +46,7 @@
       margin: 0 0 12px 0;
     }
 
-    /* 3. Circular Photo Display Elements */
+    /* 3. Circular Photo Display Elements - Fixed Centering */
     .photo-display {
       display: flex;
       gap: 10px;
@@ -55,10 +55,11 @@
       margin-bottom: 12px;
     }
     .photo-display img {
-      width: 110px; /* Placed perfectly to sit side-by-side */
+      width: 110px; /* Sized perfectly to balance side-by-side inside the card */
       height: 110px;
       object-fit: cover;
-      border-radius: 50%; /* Cuts still images into elegant portrait circles */
+      object-position: center 20%; /* Forces the framing upward to center their faces */
+      border-radius: 50%; /* Elegantly masks your screenshots into circular portraits */
       border: 2px solid #d4af37;
       box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     }
@@ -80,8 +81,8 @@
       width: 100%;
       height: 32px; 
       border-radius: 20px;
-      background: #1a1a1a; /* Dark sleek finish */
-      filter: sepia(20%) saturate(150%) hue-rotate(10deg); /* Golden hue tint override */
+      background: #1a1a1a; /* Sleek dark player modification */
+      filter: sepia(20%) saturate(150%) hue-rotate(10deg); /* Applies custom golden hue tint */
     }
 
     /* 5. Message Box */
@@ -102,7 +103,7 @@
       margin-top: 6px;
     }
 
-    /* 6. Glowing Fireworks Display System */
+    /* 6. Glowing Neon Fireworks Display System */
     .firework-display {
       position: absolute;
       top: 0;
@@ -117,11 +118,11 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); /* Neon glow effect filter */
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); /* Simulates a true glowing visual aura */
       animation: explode 3s infinite ease-out;
     }
 
-    /* Spatial positioning framing the 1/4 size card block */
+    /* Spatial burst tracking layout surrounding the main display block */
     .f1 { top: 15%; left: 15%; animation-delay: 0s; scale: 1.2; }
     .f2 { top: 20%; left: 75%; animation-delay: 0.7s; scale: 1.5; }
     .f3 { top: 70%; left: 12%; animation-delay: 1.4s; scale: 1.1; }
@@ -163,14 +164,14 @@
 </div>
 
 <div class="tribute-container">
-  <!-- Main Headers -->
+  <!-- Header Text -->
   <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
   <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
 
   <!-- Circular Photo Display Layer -->
   <div class="photo-display">
-    <img src="Images/Screenshot 2026-07-11 042511.png" alt="Kenneth and Lori Portrait 1">
-    <img src="Images/Screenshot 2026-07-11 042608.png" alt="Kenneth and Lori Portrait 2">
+    <img src="screenshot1.png" alt="Kenneth and Lori Portrait 1">
+    <img src="screenshot2.png" alt="Kenneth and Lori Portrait 2">
   </div>
 
   <!-- Audio Player Block -->
