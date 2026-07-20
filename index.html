@@ -1,190 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kenneth and Lori - 45th Anniversary Celebration</title>
-  <style>
-    /* 1. Animated Dark Sky & Responsive Mobile Setup */
-    body {
-      background-color: #0c1020;
-      margin: 0;
-      padding: 15px; /* Adds safe spacing on phone screens */
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-
-    /* 2. Compact 1/4 Size Anniversary Card Layout */
-    .tribute-container {
-      position: relative;
-      z-index: 10; /* Keeps the card visible above background fireworks */
-      width: 100%;
-      max-width: 320px; /* Slim size maximizing background firework views */
-      padding: 18px; 
-      background: rgba(255, 255, 255, 0.96); 
-      border: 3px solid #d4af37; /* Golden Anniversary Theme Border */
-      border-radius: 12px;
-      box-shadow: 0px 15px 35px rgba(0,0,0,0.6);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      box-sizing: border-box;
-    }
-    .tribute-title {
-      color: #1a1a1a;
-      font-size: 1.3rem;
-      margin: 0 0 4px 0;
-      font-weight: bold;
-    }
-    .tribute-subtitle {
-      color: #555;
-      font-size: 0.85rem;
-      margin: 0 0 12px 0;
-    }
-
-    /* 3. Circular Photo Display Element - Single Centered Image Configuration */
-    .photo-display {
-      display: flex;
-      justify-content: center; /* Centers the single image perfectly inside the card */
-      margin-bottom: 12px;
-    }
-    .photo-display img {
-      width: 140px; /* Made the single centered image slightly larger for better balance */
-      height: 140px;
-      object-fit: cover;
-      object-position: center 20%; /* Forces the framing upward to center their faces perfectly */
-      border-radius: 50%; /* Elegantly masks your screenshot into a circular portrait */
-      border: 2px solid #d4af37;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    }
-    
-    /* 4. Sleek Customized Music Box */
-    .audio-box {
-      background: #fdfbf7;
-      padding: 8px; 
-      border-radius: 6px;
-      margin: 0 0 12px 0;
-      border: 1px dashed #d4af37;
-    }
-    .audio-box h3 {
-      margin: 0 0 6px 0;
-      font-size: 0.85rem; 
-      color: #333;
-    }
-    audio {
-      width: 100%;
-      height: 32px; 
-      border-radius: 20px;
-      background: #1a1a1a; /* Sleek dark player modification */
-      filter: sepia(20%) saturate(150%) hue-rotate(10deg); /* Applies custom golden hue tint */
-    }
-
-    /* 5. Message Box */
-    .tribute-message {
-      font-size: 0.85rem; 
-      line-height: 1.4;
-      color: #333;
-      background: #f9f9f9;
-      padding: 10px;
-      border-radius: 6px;
-      border-left: 4px solid #d4af37;
-      text-align: left;
-      margin: 0;
-    }
-    .sparkle-icons {
-      font-size: 1.1rem;
-      text-align: center;
-      margin-top: 6px;
-    }
-
-    /* 6. Glowing Neon Fireworks Display System */
-    .firework-display {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .firework {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); /* Simulates a true glowing visual aura */
-      animation: explode 3s infinite ease-out;
-    }
-
-    /* Spatial burst tracking layout surrounding the main display block */
-    .f1 { top: 15%; left: 15%; animation-delay: 0s; scale: 1.2; }
-    .f2 { top: 20%; left: 75%; animation-delay: 0.7s; scale: 1.5; }
-    .f3 { top: 70%; left: 12%; animation-delay: 1.4s; scale: 1.1; }
-    .f4 { top: 65%; left: 80%; animation-delay: 2.1s; scale: 1.3; }
-    .f5 { top: 45%; left: 18%; animation-delay: 0.4s; scale: 0.9; }
-    .f6 { top: 40%; left: 82%; animation-delay: 1.8s; scale: 1.1; }
-
-    @keyframes explode {
-      0% {
-        transform: translate(0, 80px);
-        box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
-        opacity: 1;
-      }
-      25% {
-        transform: translate(0, 0);
-        box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
-        opacity: 1;
-      }
-      100% {
-        box-shadow: 
-          -150px -150px #ff3366, 150px -150px #ffcc00, -150px 150px #33ccff, 150px 150px #ff3366,
-          -220px 0px #ffcc00, 220px 0px #33ccff, 0px -220px #ff3366, 0px 220px #ffcc00,
-          -100px -60px #33ccff, 100px 60px #ff3366, -60px 100px #ffcc00, 60px -100px #33ccff;
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fed Up Video - Brian Hilburn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background: #1e1e1e;
+            border-radius: 8px;
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Six background glow firework loops -->
-<div class="firework-display">
-  <div class="firework f1"></div>
-  <div class="firework f2"></div>
-  <div class="firework f3"></div>
-  <div class="firework f4"></div>
-  <div class="firework f5"></div>
-  <div class="firework f6"></div>
-</div>
-
-<div class="tribute-container">
-  <!-- Header Text -->
-  <h1 class="tribute-title">Happy 45th Anniversary, Kenneth & Lori! 🌟</h1>
-  <p class="tribute-subtitle">Celebrating 45 years of love, laughter, and beautiful memories.</p>
-
-  <!-- Circular Photo Display Layer (Updated with Capital I in Images) -->
-  <div class="photo-display">
-    <img src="Images/Screenshot%202026-07-11%20042608.png" alt="Kenneth and Lori Anniversary Portrait">
-  </div>
-
-  <!-- Audio Player Block -->
-  <div class="audio-box">
-    <h3>🎵 Listen to Their Anniversary Song:</h3>
-    <audio controls>
-      <source src="KenLoriAnnivSong.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-
-  <!-- Message Paragraph -->
-  <div class="tribute-message">
-    <p>Forty-five years together is a true spark! Turn up your volume to listen to their custom AI tribute song and join us in celebrating Kenneth and Lori Fields! ✨ 🎆 ✨</p>
-  </div>
-</div>
+    <div class="video-container">
+        <h2>Fed Up</h2>
+        <video controls controlslist="nodownload">
+            <source src="/images/FedUp.MP4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
 </body>
 </html>
