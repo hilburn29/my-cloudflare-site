@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brian Hilburn</title>
+    <!-- Automatically loads the smart converter tool for your iPhone HEIC photos -->
+    <script src="https://jsdelivr.net"></script>
     <style>
         body {
             background-color: #111;
@@ -20,7 +22,7 @@
             max-width: 1200px;
             width: 100%;
         }
-        .gallery-item {
+        .gallery-item, .heic-placeholder {
             width: 100%;
             height: 250px;
             object-fit: cover;
@@ -28,11 +30,12 @@
             cursor: pointer;
             background-color: #222;
             transition: transform 0.2s;
+            border: none;
         }
         .gallery-item:hover {
             transform: scale(1.02);
         }
-        /* Fullscreen view when clicked */
+        /* Fullscreen Pop-up Box */
         .lightbox {
             display: none;
             position: fixed;
@@ -51,54 +54,40 @@
 </head>
 <body>
 
-    <div class="gallery" id="gallery"></div>
+    <div class="gallery">
+        <!-- Exact file names matched to your GitHub Images folder -->
+        <img src="Images/Bee-Image.jpg" class="gallery-item" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0119.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0120.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0122.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0123.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0124.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0125.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+        <img data-heic="Images/IMG_0127.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+    </div>
 
-    <!-- Hidden pop-up box for magnifying media -->
+    <!-- Hidden pop-up box for expanding images and videos -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <div id="lightbox-content"></div>
     </div>
 
     <script>
-        // Your exact GitHub details filled in automatically
-        const repoOwner = "hilburn29"; 
-        const repoName = "my-cloudflare-site"; 
-        const folderPath = "Images";
-
-        async function loadGallery() {
-            const gallery = document.getElementById('gallery');
+        // Automatically converts your .HEIC pictures into viewable web formats
+        document.querySelectorAll('img[data-heic]').forEach(async (img) => {
+            const heicUrl = img.getAttribute('data-heic');
             try {
-                const response = await fetch(`https://github.com{repoOwner}/${repoName}/contents/${folderPath}`);
-                const files = await response.json();
-
-                files.forEach(file => {
-                    const ext = file.name.split('.').pop().toLowerCase();
-                    let element;
-
-                    // Standard image types
-                    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic'].includes(ext)) {
-                        element = document.createElement('img');
-                        element.src = file.download_url;
-                        element.className = 'gallery-item';
-                        element.onclick = () => openLightbox('img', file.download_url);
-                        gallery.appendChild(element);
-                    } 
-                    // Standard video types
-                    else if (['mp4', 'mov', 'webm'].includes(ext)) {
-                        element = document.createElement('video');
-                        element.src = file.download_url;
-                        element.className = 'gallery-item';
-                        element.muted = true; 
-                        element.playsInline = true;
-                        element.onclick = () => openLightbox('video', file.download_url);
-                        gallery.appendChild(element);
-                    }
-                });
+                const res = await fetch(heicUrl);
+                const blob = await res.blob();
+                const conversionResult = await heic2any({ blob, toType: "image/jpeg" });
+                const imgUrl = URL.createObjectURL(conversionResult);
+                img.src = imgUrl;
             } catch (error) {
-                console.error("Error loading files from GitHub:", error);
+                console.error("Error converting HEIC image:", error);
             }
-        }
+        });
 
-        function openLightbox(type, src) {
+        function openLightbox(src, type) {
+            if (!src) return;
             const lightbox = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');
             
@@ -114,8 +103,6 @@
             document.getElementById('lightbox').style.display = 'none';
             document.getElementById('lightbox-content').innerHTML = '';
         }
-
-        loadGallery();
     </script>
 </body>
 </html>
