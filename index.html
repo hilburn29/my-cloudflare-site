@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brian Hilburn</title>
-    <!-- Automatically loads the smart converter tool for your iPhone HEIC photos -->
-    <script src="https://jsdelivr.net"></script>
     <style>
         body {
             background-color: #111;
@@ -13,8 +11,31 @@
             padding: 20px;
             font-family: sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Stacks the top section above the gallery */
+            align-items: center;    /* Centers everything horizontally */
         }
+        
+        /* Top Section for the Bee Image */
+        .top-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px; /* Space between bee image and the grid below */
+            margin-top: 10px;
+        }
+        .header-image {
+            width: 12.5%; /* Scaled down to exactly 1/8th of its original width */
+            max-width: 150px; /* Prevents it from getting too large on big screens */
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .header-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* The Main Image Grid underneath */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -22,7 +43,7 @@
             max-width: 1200px;
             width: 100%;
         }
-        .gallery-item, .heic-placeholder {
+        .gallery-item {
             width: 100%;
             height: 250px;
             object-fit: cover;
@@ -30,11 +51,11 @@
             cursor: pointer;
             background-color: #222;
             transition: transform 0.2s;
-            border: none;
         }
         .gallery-item:hover {
             transform: scale(1.02);
         }
+
         /* Fullscreen Pop-up Box */
         .lightbox {
             display: none;
@@ -45,7 +66,7 @@
             align-items: center;
             z-index: 1000;
         }
-        .lightbox img, .lightbox video {
+        .lightbox img {
             max-width: 95%;
             max-height: 95%;
             border-radius: 4px;
@@ -54,48 +75,32 @@
 </head>
 <body>
 
-    <div class="gallery">
-        <!-- Exact file names matched to your GitHub Images folder -->
-        <img src="Images/Bee-Image.jpg" class="gallery-item" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0119.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0120.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0122.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0123.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0124.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0125.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
-        <img data-heic="Images/IMG_0127.HEIC" class="gallery-item heic-placeholder" onclick="openLightbox(this.src, 'img')">
+    <!-- Top Featured Center Section -->
+    <div class="top-container">
+        <img src="https://githubusercontent.com" class="header-image" onclick="openLightbox(this.src)">
     </div>
 
-    <!-- Hidden pop-up box for expanding images and videos -->
+    <!-- Main Gallery Section (All other images below) -->
+    <div class="gallery">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+    </div>
+
+    <!-- Hidden pop-up box for expanding images -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <div id="lightbox-content"></div>
     </div>
 
     <script>
-        // Automatically converts your .HEIC pictures into viewable web formats
-        document.querySelectorAll('img[data-heic]').forEach(async (img) => {
-            const heicUrl = img.getAttribute('data-heic');
-            try {
-                const res = await fetch(heicUrl);
-                const blob = await res.blob();
-                const conversionResult = await heic2any({ blob, toType: "image/jpeg" });
-                const imgUrl = URL.createObjectURL(conversionResult);
-                img.src = imgUrl;
-            } catch (error) {
-                console.error("Error converting HEIC image:", error);
-            }
-        });
-
-        function openLightbox(src, type) {
-            if (!src) return;
+        function openLightbox(src) {
             const lightbox = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');
-            
-            if (type === 'img') {
-                content.innerHTML = `<img src="${src}">`;
-            } else if (type === 'video') {
-                content.innerHTML = `<video src="${src}" controls autoplay></video>`;
-            }
+            content.innerHTML = `<img src="${src}">`;
             lightbox.style.display = 'flex';
         }
 
