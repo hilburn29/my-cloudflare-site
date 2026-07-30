@@ -11,8 +11,8 @@
             padding: 20px;
             font-family: sans-serif;
             display: flex;
-            flex-direction: column; /* Stacks the top section above the gallery */
-            align-items: center;    /* Centers everything horizontally */
+            flex-direction: column;
+            align-items: center;   
         }
         
         /* Top Section for the Bee Image */
@@ -20,12 +20,12 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-bottom: 30px; /* Space between bee image and the grid below */
+            margin-bottom: 40px; 
             margin-top: 10px;
         }
         .header-image {
-            width: 12.5%; /* Scaled down to exactly 1/8th of its original width */
-            max-width: 150px; /* Prevents it from getting too large on big screens */
+            width: 12.5%; /* Scaled down to exactly 1/8th size */
+            max-width: 150px; 
             height: auto;
             border-radius: 8px;
             cursor: pointer;
@@ -35,7 +35,7 @@
             transform: scale(1.05);
         }
 
-        /* The Main Image Grid underneath */
+        /* Main Image Layout Underneath */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -56,7 +56,7 @@
             transform: scale(1.02);
         }
 
-        /* Fullscreen Pop-up Box */
+        /* Fullscreen View Box */
         .lightbox {
             display: none;
             position: fixed;
@@ -75,23 +75,23 @@
 </head>
 <body>
 
-    <!-- Top Featured Center Section -->
+    <!-- Top Centered Bee Image (1/8 Size) -->
     <div class="top-container">
-        <img src="https://githubusercontent.com" class="header-image" onclick="openLightbox(this.src)">
+        <img src="Images/Bee-Image.jpg" class="header-image" onclick="openLightbox(this.src)">
     </div>
 
-    <!-- Main Gallery Section (All other images below) -->
+    <!-- Main Content Block Below -->
     <div class="gallery">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
-        <img src="https://githubusercontent.com" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/1.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/2.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/3.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/4.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/5.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/6.jpg" class="gallery-item" onclick="openLightbox(this.src)">
+        <img src="Images/7.jpg" class="gallery-item" onclick="openLightbox(this.src)">
     </div>
 
-    <!-- Hidden pop-up box for expanding images -->
+    <!-- Hidden pop-up window for viewing enlarged items -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <div id="lightbox-content"></div>
     </div>
