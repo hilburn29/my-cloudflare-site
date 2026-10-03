@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeetyF Pro - Local Desktop Edition</title>
+<!-- Upgraded Engine Script Paths -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<style>
+:root {
+  --acrobat-red: #861C24;
+  --dark-canvas: #1E1E1E;
+  --card-bg: #2B2B2B;
+  --border-color: #3D3D3D;
+  --white: #FFFFFF;
+  --text-light: #F5F5F5;
+  --text-gray: #B0B0B0;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: var(--dark-canvas);
+  color: var(--text-light);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+header {
+  background-color: #151515;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+.nav-tabs {
+  display: flex;
+  background: #252525;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 3px;
+}
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.nav-btn.active, .nav-btn:hover {
+  background-color: var(--acrobat-red);
+  color: var(--white);
+}
+.domain-tag {
+  font-size: 13px;
+  color: var(--text-gray);
+  font-weight: 600;
+}
+.main-workspace {
+  display: flex;
+  padding: 25px;
+  gap: 25px;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: calc(100vh - 60px);
+  width: 100%;
+}
+.character-branding-panel {
+  width: 340px;
+  min-width: 340px;
+  height: 100%;
+  background-color: #151515;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.hero-graphic-frame {
+  width: 100%;
+  flex: 1;
+  border-radius: 8px;
+  background-color: #111;
+  border: 1px solid var(--border-color);
+  display: flex;
+  overflow: hidden;
+}
+
+.hero-graphic-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+.tools-view-workspace {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  display: block;
+}
+.grid-header-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: var(--white);
+  border-bottom: 2px solid var(--acrobat-red);
+  padding-bottom: 8px;
+}
+.functional-grid-system {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.tool-grid-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centers the content horizontally */
+  text-align: center;   /* Centers multi-line text */
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+.tool-grid-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--acrobat-red);
+  background-color: #353535;
+}
+.card-headline-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px; /* Increased from 15px to 18px */
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.card-subtext-desc {
+  font-size: 12px;
+  color: var(--text-gray);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.card-action-trigger-label {
+  font-size: 11px;
+  color: var(--acrobat-red);
+  font-weight: 600;
+  display: none;
+}
+.tool-runtime-panel {
+  display: none;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  flex: 1;
+  padding: 30px;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.runtime-top-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+.exit-runtime-btn {
+  background-color: #333;
+  color: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.exit-runtime-btn:hover { background-color: var(--acrobat-red); }
+.merge-list-container {
+  width: 100%;
+  max-width: 550px;
+  background: #151515;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+  min-height: 80px;
+  text-align: left;
+  box-sizing: border-box;
+}
+.merge-list-item {
+  font-size: 13px;
+  padding: 8px 12px;
+  background: #252525;
+  border: 1px solid var(--border-color);
+  margin-bottom: 8px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-action-run-btn {
+  background-color: var(--acrobat-red);
+  color: var(--white);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+}
+.secondary-action-btn {
+  background-color: #444;
+  color: var(--white);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 10px;
+}
+.form-input-group {
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+}
+.form-input-group label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-gray);
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.form-input-group input, .form-input-group textarea, .form-input-group select {
+  width: 100%;
+  padding: 10px;
+  background: #151515;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--white);
+  box-sizing: border-box;
+  font-size: 13px;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="brand-section">
+<span style="color: var(--acrobat-red); font-size: 40px; -webkit-text-stroke: 0.1px gold;">■ PeetyF Pro</span>
+</div>
+<div class="nav-tabs">
+<button class="nav-btn" onclick="switchAcrobatCategory('file', this)">File</button>
+<button class="nav-btn active" onclick="switchAcrobatCategory('edit', this)">Edit</button>
+<button class="nav-btn" onclick="switchAcrobatCategory('convert', this)">Convert</button>
+<button class="nav-btn" onclick="switchAcrobatCategory('esign', this)">E-sign</button>
+</div>
+<div class="domain-tag">brian-hilburn.com</div>
+</header>
+<main class="main-workspace">
+<div class="character-branding-panel">
+<div class="hero-graphic-frame">
+<img src="superhero-combined.jpg" alt="PeetyF Combined Cinematic Hero"></div>
+</div>
+<!-- Dynamic Tool Panels -->
+<div id="toolsWorkPanel" class="tool-runtime-panel" style="display: none;">
+<div class="runtime-top-navigation">
+<div class="grid-header-title">Tool Operations</div>
+</div>
+<div style="color:#666; text-align:center; padding-top:40px; font-size:14px;">Select a tool from the side panel to begin</div>
+</div>
+<!-- Dynamic Tool Runtimes -->
+<div id="runtimeCanvasCore" class="tool-runtime-panel">
+<div class="runtime-top-navigation">
+<div class="grid-header-title">Workspace</div>
+<button class="exit-runtime-btn" onclick="exitToHome()">Exit Tool</button>
+</div>
+<div id="activeCanvasRenderer" style="display:flex; flex-direction:column; align-items:center; width:100%; box-sizing: border-box;">
+<!-- Canvas Content Injected Here -->
+</div>
+</div>
+<!-- Tools View -->
+<div id="gridListCanvas" class="tools-view-workspace">
+<!-- Initial Categories Display Removed -->
+<div id="fileTools" class="tools-category" style="display:none;">
+<h2 class="grid-header-title">File Tools</h2>
+<div class="functional-grid-system">
+<div class="tool-grid-card" onclick="openFileAction('open-doc')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📄</span> Open Document</div>
+<div class="card-subtext-desc">Render document pages out into flat sequential image picture files.</div>
+<div class="card-action-trigger-label">Select file to view</div>
+</div>
+<div class="tool-grid-card" onclick="openFileAction('save-as')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📥</span> Save a Copy</div>
+<div class="card-subtext-desc">Download your file straight to your local system.</div>
+<div class="card-action-trigger-label">Download current file</div>
+</div>
+<div class="tool-grid-card" onclick="openFileAction('print')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🖨️</span> Print</div>
+<div class="card-subtext-desc">Send content directly to your printer.</div>
+<div class="card-action-trigger-label">Click print</div>
+</div>
+</div>
+</div>
+<div id="editTools" class="tools-category" style="display:block;">
+<h2 class="grid-header-title">Edit Tools</h2>
+<div class="functional-grid-system">
+<div class="tool-grid-card" onclick="openEditAction('combine')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">➕</span> Combine files</div>
+<div class="card-subtext-desc">Merge multiple separate files into a single clean PDF document natively.</div>
+<div class="card-action-trigger-label">Drag and drop, or select files</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('text-edit')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">✏️</span> Edit text & images</div>
+<div class="card-subtext-desc">Modify or add text inscriptions directly to document pages.</div>
+<div class="card-action-trigger-label">Select file and add inscription</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('split')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">✂️</span> Split a PDF</div>
+<div class="card-subtext-desc">Separate a large document file out into individual page files.</div>
+<div class="card-action-trigger-label">Select PDF to split</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('crop')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📐</span> Crop pages</div>
+<div class="card-subtext-desc">Trim page margins or scale layout dimensions cleanly.</div>
+<div class="card-action-trigger-label">Select PDF to trim</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('delete')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🗑️</span> Delete pages</div>
+<div class="card-subtext-desc">Remove selected page numbers cleanly from your PDF.</div>
+<div class="card-action-trigger-label">Select file and page numbers to delete</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('extract')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📄</span> Extract pages</div>
+<div class="card-subtext-desc">Create a brand new structural PDF using only selected pages.</div>
+<div class="card-action-trigger-label">Select page numbers to extract</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('number-pages')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🔢</span> Number pages</div>
+<div class="card-subtext-desc">Add sequential page numbers to your document pages.</div>
+<div class="card-action-trigger-label">Add page numbers</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('organize-pages')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📑</span> Organize pages</div>
+<div class="card-subtext-desc">Reorder, insert, or manipulate the sequence of pages.</div>
+<div class="card-action-trigger-label">Organize pages</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('reorder-pages')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🔁</span> Reorder pages</div>
+<div class="card-subtext-desc">Change the order of pages within your PDF.</div>
+<div class="card-action-trigger-label">Reorder pages</div>
+</div>
+<div class="tool-grid-card" onclick="openEditAction('rotate-pages')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🔄</span> Rotate pages</div>
+<div class="card-subtext-desc">Change the orientation of pages in your document.</div>
+<div class="card-action-trigger-label">Rotate pages</div>
+</div>
+</div>
+</div>
+<div id="convertTools" class="tools-category" style="display:none;">
+<h2 class="grid-header-title">Convert Tools</h2>
+<div class="functional-grid-system">
+
+<div class="tool-grid-card" onclick="openConvertAction('word-pdf')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📝</span> Word to PDF</div>
+<div class="card-subtext-desc">Convert entire Microsoft Word documents into PDF files.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Select file</div>
+</div>
+
+<div class="tool-grid-card" onclick="openConvertAction('pdf-jpg')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🖼️</span> PDF to JPG</div>
+<div class="card-subtext-desc">Convert PDF pages into high-quality JPG images.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Select PDF</div>
+</div>
+
+<div class="tool-grid-card" onclick="openConvertAction('jpg-pdf')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">📄</span> JPG to PDF</div>
+<div class="card-subtext-desc">Convert image files into a single PDF document.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Select file</div>
+</div>
+
+<div class="tool-grid-card" onclick="openConvertAction('compress')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">🗜️</span> Compress a PDF</div>
+<div class="card-subtext-desc">Reduce the file size of your PDF document.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Select PDF</div>
+</div>
+
+</div>
+</div>
+<div id="esignTools" class="tools-category" style="display:none;">
+<h2 class="grid-header-title">E-sign Tools</h2>
+<div class="functional-grid-system">
+
+<div class="tool-grid-card" onclick="openEsignAction('fill-sign')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">✍️</span> Fill & Sign</div>
+<div class="card-subtext-desc">Add your signature to a document. Options include typing, drawing, or uploading an image format.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Browse Local Files</div>
+</div>
+
+<div class="tool-grid-card" onclick="openEsignAction('request-signatures')">
+<div class="card-headline-row"><span style="color:var(--acrobat-red);">✉️</span> Request e-signatures</div>
+<div class="card-subtext-desc">Send a document securely to others for their electronic signature.</div>
+<div class="card-action-trigger-label" style="color:var(--acrobat-red);">Send Request Link</div>
+</div>
+
+<!-- Create e-sign template section has been entirely removed per your instructions -->
+
+</div>
+</div>
+
+</div> <!-- End of gridListCanvas -->
+</main>
+
+<script>
+function switchAcrobatCategory(category, btnElement) {
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  if (btnElement) btnElement.classList.add('active');
+
+  document.querySelectorAll('.tools-category').forEach(el => el.style.display = 'none');
+  
+  const targetId = category + 'Tools';
+  const targetEl = document.getElementById(targetId);
+  if (targetEl) targetEl.style.display = 'block';
+
+  document.getElementById('runtimeCanvasCore').style.display = 'none';
+  document.getElementById('toolsWorkPanel').style.display = 'none';
+  document.getElementById('gridListCanvas').style.display = 'block';
+}
+
+function exitToHome() {
+  document.getElementById('runtimeCanvasCore').style.display = 'none';
+  document.getElementById('gridListCanvas').style.display = 'block';
+  document.getElementById('toolsWorkPanel').style.display = 'none';
+}
+
+// Opens the actual workspace panel and builds the tool interface
+function openToolWorkspace(toolTitle, toolDescription) {
+  // Hide the grid view
+  document.getElementById('gridListCanvas').style.display = 'none';
+  document.getElementById('toolsWorkPanel').style.display = 'none';
+
+  // Show the workspace view
+  document.getElementById('runtimeCanvasCore').style.display = 'flex';
+
+  // Inject the specific tool's interface into the workspace
+  const renderer = document.getElementById('activeCanvasRenderer');
+  renderer.innerHTML = `
+    <h2 style="color: var(--white); margin-bottom: 10px; margin-top: 30px;">${toolTitle}</h2>
+    <p style="color: var(--text-gray); margin-bottom: 30px;">${toolDescription}</p>
+    
+    <div class="merge-list-container" style="text-align: center; padding: 50px 20px;">
+      <input type="file" id="fileSelector" style="display: none;" multiple accept=".pdf,.jpg,.png,.doc,.docx">
+      <button class="main-action-run-btn" onclick="document.getElementById('fileSelector').click()">
+        Select File to Begin
+      </button>
+      <div style="margin-top: 15px; font-size: 12px; color: var(--text-gray);">or drag and drop files here</div>
+    </div>
+  `;
+}
+
+// Opens the actual workspace panel and builds the tool interface
+function openToolWorkspace(toolTitle, toolDescription) {
+  // Hide the grid view
+  document.getElementById('gridListCanvas').style.display = 'none';
+  document.getElementById('toolsWorkPanel').style.display = 'none';
+
+  // Show the workspace view
+  document.getElementById('runtimeCanvasCore').style.display = 'flex';
+
+  // Inject the specific tool's interface into the workspace
+  const renderer = document.getElementById('activeCanvasRenderer');
+  renderer.innerHTML = `
+    <h2 style="color: var(--white); margin-bottom: 10px; margin-top: 30px;">${toolTitle}</h2>
+    <p style="color: var(--text-gray); margin-bottom: 30px;">${toolDescription}</p>
+    
+    <div class="merge-list-container" style="text-align: center; padding: 50px 20px;">
+      <input type="file" id="fileSelector" style="display: none;" multiple accept=".pdf,.jpg,.png,.doc,.docx">
+      <button class="main-action-run-btn" onclick="document.getElementById('fileSelector').click()">
+        Select File to Begin
+      </button>
+      <div style="margin-top: 15px; font-size: 12px; color: var(--text-gray);">or drag and drop files here</div>
+    </div>
+  `;
+}
+// Connect the grid buttons to the workspace function
+function openFileAction(action) { 
+  openToolWorkspace('File Manager', 'Select a file to open, print, or save.'); 
+}
+function openEditAction(action) { 
+  openToolWorkspace('Edit Document', 'Select a PDF to combine, split, or modify.'); 
+}
+function openConvertAction(action) { 
+  openToolWorkspace('Convert Format', 'Select a file to convert its format.'); 
+}
+function openEsignAction(action) { 
+  openToolWorkspace('E-Sign Document', 'Select a document to add or request signatures.'); 
+}
+</script>
+</body>
+</html>
