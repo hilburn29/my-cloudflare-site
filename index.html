@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeetyF Pro - Local Desktop Edition</title>
+<!-- PDF.js and PDF-Lib CDN Engines for local file rendering -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<style>
+:root {
+  --acrobat-red: #861C24;
+  --dark-canvas: #1E1E1E;
+  --card-bg: #2B2B2B;
+  --border-color: #3D3D3D;
+  --white: #FFFFFF;
+  --text-light: #F5F5F5;
+  --text-gray: #B0B0B0;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: var(--dark-canvas);
+  color: var(--text-light);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+header {
+  background-color: #151515;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+.nav-tabs {
+  display: flex;
+  background: #252525;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 3px;
+  margin-top: 8px; /* Shifted down */
+  margin-left: 45px; /* Shifted right */
+}
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  padding: 8px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.nav-btn.active, .nav-btn:hover {
+  background-color: var(--acrobat-red);
+  color: var(--white);
+}
+.domain-tag {
+  font-size: 16px;
+  color: var(--text-gray);
+  font-weight: 600;
+}
+.main-workspace {
+  display: flex;
+  padding: 10px 15px;
+  gap: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: calc(100vh - 55px);
+  width: 100%;
+}
+.character-branding-panel {
+  width: 480px;
+  min-width: 480px;
+  height: 100%;
+  background-color: #151515;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+.character-branding-panel.hidden {
+  display: none;
+}
+.hero-graphic-frame {
+  width: 100%;
+  flex: 1;
+  border-radius: 6px;
+  background-color: #111;
+  border: 1px solid var(--border-color);
+  display: flex;
+  overflow: hidden;
+}
+.hero-graphic-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+.tools-view-workspace {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  display: block;
+  box-sizing: border-box;
+}
+.grid-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: var(--white);
+  border-bottom: 2px solid var(--acrobat-red);
+  padding-bottom: 6px;
+}
+.functional-grid-system {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+}
+.tool-grid-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  box-sizing: border-box;
+}
+.tool-grid-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--acrobat-red);
+  background-color: #353535;
+}
+.card-icon-wrapper {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+.card-headline-row {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.card-subtext-desc {
+  font-size: 12px;
+  color: var(--text-gray);
+  line-height: 1.3;
+  margin: 0;
+}
+.tool-runtime-panel {
+  display: none;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  flex: 1;
+  padding: 16px;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.runtime-top-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.exit-runtime-btn {
+  background-color: #333;
+  color: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.exit-runtime-btn:hover { background-color: var(--acrobat-red); }
+
+.pro-edit-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #151515;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+.toolbar-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.toolbar-select, .toolbar-btn {
+  background: #2B2B2B;
+  color: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.toolbar-select {
+  padding-right: 24px;
+}
+.toolbar-btn:hover, .toolbar-btn.active {
+  background-color: var(--acrobat-red);
+  border-color: var(--acrobat-red);
+}
+
+.zoom-action-btn {
+  background: #2B2B2B;
+  color: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.zoom-action-btn:hover {
+  background-color: var(--acrobat-red);
+  border-color: var(--acrobat-red);
+}
+
+.icon-group {
+  display: flex;
+  gap: 4px;
+  background: #222;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.action-main-btn {
+  padding: 12px 24px;
+  background-color: var(--acrobat-red);
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-main-btn:hover {
+  background-color: #A9232D;
+}
+
+.pdf-viewer-container {
+  flex: 1;
+  background: #111;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.pdf-canvas {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+  max-width: 100%;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="brand-section">
+<span style="color: #D8B980; font-size: 28px; -webkit-text-stroke: 0.8px var(--acrobat-red);">■ PeetyF Pro</span>
+</div>
+<div class="nav-tabs">
+<button class="nav-btn" onclick="switchAcrobatCategory('file', this)">File</button>
+<button class="nav-btn" onclick="switchAcrobatCategory('edit', this)">Edit</button>
+<button class="nav-btn" onclick="switchAcrobatCategory('convert', this)">Convert</button>
+<button class="nav-btn" onclick="switchAcrobatCategory('esign', this)">E-sign</button>
+</div>
+<div class="domain-tag">brian-hilburn.com</div>
+</header>
+
+<main class="main-workspace">
+<div id="characterPanel" class="character-branding-panel">
+<div class="hero-graphic-frame">
+<img src="superhero-combined.jpg" alt="PeetyF Combined Cinematic Hero"></div>
+</div>
+
+<div id="runtimeCanvasCore" class="tool-runtime-panel">
+<div class="runtime-top-navigation">
+<div class="grid-header-title" id="runtimeTitle" style="margin:0; font-size:20px; border-bottom:none; padding-bottom:0;">Workspace</div>
+<button class="exit-runtime-btn" onclick="exitToHome()">Exit Tool</button>
+</div>
+<div id="activeCanvasRenderer" style="display:flex; flex-direction:column; height: calc(100% - 40px); width:100%; box-sizing: border-box;">
+</div>
+</div>
+
+<div id="gridListCanvas" class="tools-view-workspace">
+  <div id="fileTools" class="tools-category" style="display:none;">
+    <h2 class="grid-header-title">File Tools</h2>
+    <div class="functional-grid-system">
+      <div class="tool-grid-card" onclick="openToolWorkspace('Open Document', 'Select a file to view or inspect.')">
+        <div class="card-icon-wrapper">📄</div>
+        <div class="card-headline-row">Open Document</div>
+        <div class="card-subtext-desc">Render document pages out into flat sequential image files.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Save a Copy', 'Download your file straight to your local system.')">
+        <div class="card-icon-wrapper">📥</div>
+        <div class="card-headline-row">Save a Copy</div>
+        <div class="card-subtext-desc">Download your file straight to your local system.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="editTools" class="tools-category" style="display:none;">
+    <h2 class="grid-header-title">Edit Tools</h2>
+    <div class="functional-grid-system">
+      <div class="tool-grid-card" onclick="openToolWorkspace('Combine files', 'Merge multiple separate files into a single clean PDF document natively.')">
+        <div class="card-icon-wrapper" style="color:var(--acrobat-red);">➕</div>
+        <div class="card-headline-row">Combine files</div>
+        <div class="card-subtext-desc">Merge multiple separate files into a single clean PDF document natively.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openEditTextAndImagesWorkspace()">
+        <div class="card-icon-wrapper">✏️</div>
+        <div class="card-headline-row">Edit text & images</div>
+        <div class="card-subtext-desc">Modify or add text inscriptions directly to document pages.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Split a PDF', 'Separate a large document file out into individual page files.')">
+        <div class="card-icon-wrapper">✂️</div>
+        <div class="card-headline-row">Split a PDF</div>
+        <div class="card-subtext-desc">Separate a large document file out into individual page files.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Crop pages', 'Trim page margins or scale layout dimensions cleanly.')">
+        <div class="card-icon-wrapper">📐</div>
+        <div class="card-headline-row">Crop pages</div>
+        <div class="card-subtext-desc">Trim page margins or scale layout dimensions cleanly.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Delete pages', 'Remove selected page numbers cleanly from your PDF.')">
+        <div class="card-icon-wrapper">🗑️</div>
+        <div class="card-headline-row">Delete pages</div>
+        <div class="card-subtext-desc">Remove selected page numbers cleanly from your PDF.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Extract pages', 'Create a brand new structural PDF using only selected pages.')">
+        <div class="card-icon-wrapper">📄</div>
+        <div class="card-headline-row">Extract pages</div>
+        <div class="card-subtext-desc">Create a brand new structural PDF using only selected pages.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Number pages', 'Add sequential page numbers to your document pages.')">
+        <div class="card-icon-wrapper">🔢</div>
+        <div class="card-headline-row">Number pages</div>
+        <div class="card-subtext-desc">Add sequential page numbers to your document pages.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Organize pages', 'Reorder, insert, or manipulate the sequence of pages.')">
+        <div class="card-icon-wrapper">📑</div>
+        <div class="card-headline-row">Organize pages</div>
+        <div class="card-subtext-desc">Reorder, insert, or manipulate the sequence of pages.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Reorder pages', 'Change the order of pages within your PDF.')">
+        <div class="card-icon-wrapper">🔁</div>
+        <div class="card-headline-row">Reorder pages</div>
+        <div class="card-subtext-desc">Change the order of pages within your PDF.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Rotate pages', 'Change the orientation of pages in your document.')">
+        <div class="card-icon-wrapper">🔄</div>
+        <div class="card-headline-row">Rotate pages</div>
+        <div class="card-subtext-desc">Change the orientation of pages in your document.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="convertTools" class="tools-category" style="display:none;">
+    <h2 class="grid-header-title">Convert Tools</h2>
+    <div class="functional-grid-system">
+      <div class="tool-grid-card" onclick="openToolWorkspace('Word to PDF', 'Convert entire Microsoft Word documents into PDF files.')">
+        <div class="card-icon-wrapper">📝</div>
+        <div class="card-headline-row">Word to PDF</div>
+        <div class="card-subtext-desc">Convert entire Microsoft Word documents into PDF files.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('PDF to JPG', 'Convert PDF pages into high-quality JPG images.')">
+        <div class="card-icon-wrapper">🖼️</div>
+        <div class="card-headline-row">PDF to JPG</div>
+        <div class="card-subtext-desc">Convert PDF pages into high-quality JPG images.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="esignTools" class="tools-category" style="display:none;">
+    <h2 class="grid-header-title">E-sign Tools</h2>
+    <div class="functional-grid-system">
+      <div class="tool-grid-card" onclick="openToolWorkspace('Fill & Sign', 'Add your signature to a document.')">
+        <div class="card-icon-wrapper">✍️</div>
+        <div class="card-headline-row">Fill & Sign</div>
+        <div class="card-subtext-desc">Add your signature to a document.</div>
+      </div>
+      <div class="tool-grid-card" onclick="openToolWorkspace('Request e-signatures', 'Send a document securely to others for their electronic signature.')">
+        <div class="card-icon-wrapper">✉️</div>
+        <div class="card-headline-row">Request e-signatures</div>
+        <div class="card-subtext-desc">Send a document securely to others for their electronic signature.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<script>
+let currentPdfDoc = null;
+let currentZoomScale = 1.2;
+
+function switchAcrobatCategory(category, btnElement) {
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  if (btnElement) btnElement.classList.add('active');
+
+  document.querySelectorAll('.tools-category').forEach(el => el.style.display = 'none');
+  const targetEl = document.getElementById(category + 'Tools');
+  if (targetEl) targetEl.style.display = 'block';
+
+  document.getElementById('runtimeCanvasCore').style.display = 'none';
+  document.getElementById('gridListCanvas').style.display = 'block';
+  document.getElementById('characterPanel').classList.remove('hidden');
+}
+
+function exitToHome() {
+  currentPdfDoc = null;
+  document.getElementById('runtimeCanvasCore').style.display = 'none';
+  document.getElementById('gridListCanvas').style.display = 'block';
+  document.getElementById('characterPanel').classList.remove('hidden');
+}
+
+async function renderPdfPages(pdfDoc, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+    const page = await pdfDoc.getPage(pageNum);
+    const viewport = page.getViewport({ scale: currentZoomScale });
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pdf-canvas';
+    const context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    container.appendChild(canvas);
+
+    await page.render({
+      canvasContext: context,
+      viewport: viewport
+    }).promise;
+  }
+}
+
+function changeZoom(delta, containerId) {
+  currentZoomScale += delta;
+  if (currentZoomScale < 0.4) currentZoomScale = 0.4;
+  if (currentZoomScale > 3.0) currentZoomScale = 3.0;
+  if (currentPdfDoc) {
+    renderPdfPages(currentPdfDoc, containerId);
+  }
+}
+
+function openToolWorkspace(toolTitle, toolDescription) {
+  currentPdfDoc = null;
+  currentZoomScale = 1.2;
+  document.getElementById('gridListCanvas').style.display = 'none';
+  document.getElementById('characterPanel').classList.add('hidden');
+  document.getElementById('runtimeCanvasCore').style.display = 'flex';
+  document.getElementById('runtimeTitle').innerText = toolTitle;
+
+  const renderer = document.getElementById('activeCanvasRenderer');
+  renderer.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <p style="color: var(--text-gray); margin: 0; font-size: 16px;">${toolDescription}</p>
+      <div style="display: flex; gap: 8px;">
+        <button class="zoom-action-btn" onclick="changeZoom(-0.2, 'genericPdfPagesContainer')" title="Zoom Out">🔍 Zoom Out (-)</button>
+        <button class="zoom-action-btn" onclick="changeZoom(0.2, 'genericPdfPagesContainer')" title="Zoom In">🔍 Zoom In (+)</button>
+      </div>
+    </div>
+    <div style="text-align: center; padding: 25px; background: #151515; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 16px;">
+      <input type="file" id="genericFileSelector" style="display: none;" accept=".pdf">
+      <button class="action-main-btn" onclick="document.getElementById('genericFileSelector').click()">
+        Select PDF File
+      </button>
+      <div style="margin-top: 12px; font-size: 15px; color: var(--text-gray);">Choose a PDF from your device to load into this tool</div>
+    </div>
+    <div id="genericPdfViewerArea" class="pdf-viewer-container" style="flex: 1; background: #111; border: 1px solid var(--border-color); border-radius: 6px; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: 16px; box-sizing: border-box;">
+      <div id="genericPdfPagesContainer" style="display: flex; flex-direction: column; align-items: center; width: 100%;"></div>
+    </div>
+  `;
+
+  document.getElementById('genericFileSelector').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const container = document.getElementById('genericPdfPagesContainer');
+    container.innerHTML = '<p style="color: var(--text-gray); padding: 15px; font-size: 16px;">Rendering document pages...</p>';
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      currentPdfDoc = await loadingTask.promise;
+      renderPdfPages(currentPdfDoc, 'genericPdfPagesContainer');
+    } catch (err) {
+      container.innerHTML = '<p style="color: #ff6b6b; padding: 15px; font-size: 16px;">Error loading PDF file. Please try another file.</p>';
+    }
+  });
+}
+
+function openEditTextAndImagesWorkspace() {
+  currentPdfDoc = null;
+  currentZoomScale = 1.2;
+  document.getElementById('gridListCanvas').style.display = 'none';
+  document.getElementById('characterPanel').classList.add('hidden');
+  document.getElementById('runtimeCanvasCore').style.display = 'flex';
+  document.getElementById('runtimeTitle').innerText = 'Edit Text & Images';
+
+  const renderer = document.getElementById('activeCanvasRenderer');
+  renderer.innerHTML = `
+    <div class="pro-edit-toolbar">
+      <div class="toolbar-row">
+        <select class="toolbar-select">
+          <option>Myriad Pro</option>
+          <option>Segoe UI</option>
+          <option>Arial</option>
+          <option>Times New Roman</option>
+        </select>
+        <select class="toolbar-select" style="max-width: 100px;">
+          <option>Regular</option>
+          <option>Bold</option>
+          <option>Italic</option>
+        </select>
+        <select class="toolbar-select" style="max-width: 80px;">
+          <option>10</option>
+          <option>12</option>
+          <option>14</option>
+          <option>16</option>
+          <option>18</option>
+          <option>24</option>
+        </select>
+        <input type="color" value="#FFFFFF" style="width:32px; height:32px; border:none; background:none; cursor:pointer;" title="Font Color">
+        
+        <div class="icon-group">
+          <button class="toolbar-btn" onclick="toggleActive(this)"><b>B</b></button>
+          <button class="toolbar-btn" onclick="toggleActive(this)"><i>I</i></button>
+          <button class="toolbar-btn" onclick="toggleActive(this)"><u>U</u></button>
+          <button class="toolbar-btn" onclick="toggleActive(this)" title="Highlight">🖍</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)" title="Underline">_</button>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-left: auto;">
+          <button class="zoom-action-btn" onclick="changeZoom(-0.2, 'pdfPagesContainer')" title="Zoom Out">🔍 Zoom Out (-)</button>
+          <button class="zoom-action-btn" onclick="changeZoom(0.2, 'pdfPagesContainer')" title="Zoom In">🔍 Zoom In (+)</button>
+        </div>
+      </div>
+      
+      <div class="toolbar-row">
+        <div class="icon-group">
+          <button class="toolbar-btn" onclick="toggleActive(this)">• List</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">1. List</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">≡ Align</button>
+        </div>
+        <div class="icon-group">
+          <button class="toolbar-btn" onclick="toggleActive(this)">↖ Selection</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">💬 Comments</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">✏️ Draw</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">📐 Shapes</button>
+          <button class="toolbar-btn" onclick="toggleActive(this)">✒ Stamps</button>
+        </div>
+        <button class="action-main-btn" onclick="document.getElementById('pdfUploadInput').click()">➕ Add Text / Image</button>
+      </div>
+    </div>
+
+    <div id="pdfViewerArea" class="pdf-viewer-container">
+      <input type="file" id="pdfUploadInput" style="display: none;" accept=".pdf">
+      <div id="uploadPrompt" style="text-align: center; padding: 40px 20px;">
+        <button class="action-main-btn" style="padding: 16px 32px; font-size: 18px;" onclick="document.getElementById('pdfUploadInput').click()">
+          Select PDF File to View & Edit
+        </button>
+        <div style="margin-top: 16px; font-size: 16px; color: var(--text-gray);">Upload a document to render pages in real-time</div>
+      </div>
+      <div id="pdfPagesContainer" style="display: flex; flex-direction: column; align-items: center; width: 100%;"></div>
+    </div>
+  `;
+
+  document.getElementById('pdfUploadInput').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    document.getElementById('uploadPrompt').style.display = 'none';
+    const container = document.getElementById('pdfPagesContainer');
+    container.innerHTML = '<p style="color: var(--text-gray); padding: 15px; font-size: 16px;">Rendering document pages...</p>';
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      currentPdfDoc = await loadingTask.promise;
+      renderPdfPages(currentPdfDoc, 'pdfPagesContainer');
+    } catch (err) {
+      container.innerHTML = '<p style="color: #ff6b6b; padding: 15px; font-size: 16px;">Error loading PDF file. Please try another file.</p>';
+    }
+  });
+}
+
+function toggleActive(btn) {
+  btn.classList.toggle('active');
+}
+</script>
+</body>
+</html>
